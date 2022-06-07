@@ -3,12 +3,11 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '../config/config.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { AtStrategy } from './strategies/accesst.strategy';
 
 @Global()
 @Module({
     imports: [JwtModule.register({})],
-    providers: [AuthService, AuthController, AtStrategy, ConfigService],
+    providers: [AuthService, AuthController, ConfigService],
     exports: [AuthService],
 })
 export class AuthModule { }
