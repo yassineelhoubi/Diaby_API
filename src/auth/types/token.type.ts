@@ -1,4 +1,4 @@
 export type Token = {
-  userId: string;
+  payload: any;
   token: string;
 };

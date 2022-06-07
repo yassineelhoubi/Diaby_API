@@ -10,30 +10,22 @@ export class AuthService {
         private jwtService: JwtService,
     ) { }
 
-    /**
-* function for creating acces/refresh tokens
-* @params {(jwtPayload , expiresIn:string,key:string)} takes a payload that includes the userID and a list of the user permissions and the expiration time and the secretKey
-* @returns {(Promise<Token>)} returns an access token
-* @memberof AuthService
-*/
     async createToken(
-        userId: string,
+        payload: any,
         role: string,
         expiresIn: string,
-        key: string,
     ): Promise<string> {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const tokenSecret = (key = 'access'
-            ? this.configService.get('ACCESS_TOKEN')
-            : this.configService.get('REFRESH_TOKEN'));
 
+        const secretKey = {
+            user: this.configService.get('USER_SECRET_KEY')
+        }
         const jwtPayload: jwtPayload = {
-            userId,
+            payload,
             role,
         };
 
         const token = await this.jwtService.signAsync(jwtPayload, {
-            secret: tokenSecret,
+            secret: secretKey[role],
             expiresIn,
         });
 
