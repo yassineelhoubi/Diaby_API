@@ -16,6 +16,15 @@ export class UserController {
     }
   }
 
+  @Post('login')
+  async login(@Body() loginUserDto: CreateUserDto) {
+    try {
+      return await this.userService.login(loginUserDto);
+    } catch (error) {
+      return { error: error.message };
+    }
+  }
+
   @Get()
   findAll() {
     return this.userService.findAll();
