@@ -12,12 +12,11 @@ export class AuthService {
 
     async createToken(
         payload: any,
-        role: string,
-        expiresIn: string,
+        role: string
     ): Promise<string> {
 
         const secretKey = {
-            user: this.configService.get('USER_SECRET_KEY')
+            USER: this.configService.get('USER_SECRET_KEY')
         }
         const jwtPayload: jwtPayload = {
             payload,
@@ -26,7 +25,7 @@ export class AuthService {
 
         const token = await this.jwtService.signAsync(jwtPayload, {
             secret: secretKey[role],
-            expiresIn,
+            expiresIn: '1h',
         });
 
         return token;
