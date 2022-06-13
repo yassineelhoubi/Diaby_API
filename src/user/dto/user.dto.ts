@@ -13,4 +13,13 @@ export class UserDto {
     @Length(5, 20)
     password: string;
 
+    @IsString()
+    phone: string;
+
+    @IsString()
+    diabetesType: 'A' | 'B';
+
+    @IsString()
+    patientCode: string;
+
 }
