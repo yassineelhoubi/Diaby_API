@@ -4,5 +4,11 @@ export class User {
     lName: string;
     email: string;
     password: string;
+    phone: string;
+    diabetesType: 'A' | 'B';
+    patientCode: string;
+    weight: number;
+    diet: string
+    otherInfo: string[];
     role: string;
 }

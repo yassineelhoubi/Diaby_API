@@ -5,6 +5,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './user.schema';
 import { Model } from 'mongoose';
 import { AuthService } from 'src/auth/auth.service';
+import * as argon from 'argon2';
+import console from 'console';
 @Injectable()
 export class UserService {
 
@@ -13,9 +15,35 @@ export class UserService {
     private readonly authService: AuthService,
   ) { }
 
-  create(createUserDto: CreateUserDto) {
-    const createdUser = new this.userModel(createUserDto);
-    return createdUser.save();
+  async create(createUserDto: CreateUserDto) {
+    try {
+
+      const user = await this.userModel.findOne({ email: createUserDto.email });
+      if (user) throw new Error('Email already exists');
+
+      // hash the password
+      const password = await argon.hash(createUserDto.password);
+
+      // create the user
+      const createdUser = new this.userModel({
+        ...createUserDto,
+        password,
+      });
+
+      await createdUser.save();
+
+      if (!createdUser) throw new Error('Failed to create user');
+
+      // create the token
+      const token = await this.authService.createToken(createdUser, 'USER');
+
+      return { token, user };
+
+    }
+    catch (error) {
+      return { error: error.message };
+    }
+
   }
 
   async login(loginUserDto: CreateUserDto) {
