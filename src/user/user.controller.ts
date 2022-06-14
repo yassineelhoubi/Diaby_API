@@ -10,7 +10,7 @@ export class UserController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     try {
-      return await this.userService.create(createUserDto);
+      return this.userService.create(createUserDto);
     } catch (error) {
       return { error: error.message };
     }
@@ -19,13 +19,13 @@ export class UserController {
   @Post('login')
   async login(@Body() loginUserDto: CreateUserDto) {
     try {
-      return await this.userService.login(loginUserDto);
+      return this.userService.login(loginUserDto);
     } catch (error) {
       return { error: error.message };
     }
   }
 
-  @Get()
+  @Get("/test")
   findAll() {
     return this.userService.findAll();
   }
