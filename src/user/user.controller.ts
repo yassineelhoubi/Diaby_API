@@ -3,6 +3,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
+import { Role } from 'src/decorators/role.decorator';
 
 @Controller('user')
 export class UserController {
@@ -25,7 +26,7 @@ export class UserController {
       return { error: error.message };
     }
   }
-
+  @Role("USER")
   @UseGuards(JwtGuard)
   @Get("/test")
   findAll() {

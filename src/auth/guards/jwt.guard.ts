@@ -16,7 +16,6 @@ export class JwtGuard implements CanActivate {
     async canActivate(context: ExecutionContext): Promise<any> {
         const request = context.switchToHttp().getRequest();
         const role = this.reflector.get<string>('role', context.getHandler());
-console.log(role);
         const Authorization = request.headers.authorization;//
         if (!Authorization) throw new UnauthorizedException();
 
