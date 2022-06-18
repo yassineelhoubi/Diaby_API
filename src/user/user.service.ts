@@ -6,6 +6,7 @@ import { User } from './user.schema';
 import { Model } from 'mongoose';
 import { AuthService } from 'src/auth/auth.service';
 import * as argon from 'argon2';
+import { generatePatientCode } from 'src/helpers/functions';
 @Injectable()
 export class UserService {
 
@@ -23,9 +24,14 @@ export class UserService {
       // hash the password
       const password = await argon.hash(createUserDto.password);
 
+      // generate a unique patientCode based on the fullName and date and uuid4
+      const fullName = `${createUserDto.fName}-${createUserDto.lName}`;
+      const patientCode = generatePatientCode(fullName, 10);
+
       // create the user
       const createdUser = new this.userModel({
         ...createUserDto,
+        patientCode,
         password,
       });
 
