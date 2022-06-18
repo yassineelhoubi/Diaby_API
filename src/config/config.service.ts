@@ -12,7 +12,7 @@ export class ConfigService {
     private readonly envConfig: EnvConfig;
 
     constructor() {
-        const file: Buffer | undefined = fs.readFileSync(process.env.NODE_ENV === 'production' ? '.env.prod' : '.env');
+        const file: any = process.env.NODE_ENV === 'production' ? process.env: fs.readFileSync('.env') 
         const config = dotenv.parse(file);
         this.envConfig = this.validateInput(config);
     }
