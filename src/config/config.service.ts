@@ -12,10 +12,9 @@ export class ConfigService {
     private readonly envConfig: EnvConfig;
 
     constructor() {
-        const file: any = process.env.NODE_ENV === 'production' ? process.env: fs.readFileSync('.env') 
+        const file: any = fs.readFileSync('.env');
         const config = dotenv.parse(file);
         this.envConfig = this.validateInput(config);
-        console.log("_________"+process.env.NODE_ENV+"_________");
     }
     private validateInput(envConfig: EnvConfig): EnvConfig {
         const envVarsSchema: Joi.ObjectSchema = Joi.object({
