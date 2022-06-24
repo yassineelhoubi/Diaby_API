@@ -8,6 +8,7 @@ import { UserModule } from 'src/modules/user/user.module';
 import configuration from 'src/config/configuration';
 import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from "@nestjs/config";
+import { UserDiaryModule } from '../user-diary/user-diary.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -24,7 +25,8 @@ import { ConfigService } from "@nestjs/config";
       },
       inject: [ConfigService],
     }),
-    UserModule
+    UserModule,
+    UserDiaryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
