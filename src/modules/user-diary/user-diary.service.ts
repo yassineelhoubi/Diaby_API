@@ -1,11 +1,25 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { CreateUserDiaryDto } from './dto/create-user-diary.dto';
 import { UpdateUserDiaryDto } from './dto/update-user-diary.dto';
+import { Model } from 'mongoose';
+import { UserDiary } from './user-diary.schema';
 
 @Injectable()
 export class UserDiaryService {
+
+  constructor(
+    @InjectModel(UserDiary.name) private readonly userDiaryModel: Model<UserDiary>
+  ) { }
+
   create(createUserDiaryDto: CreateUserDiaryDto) {
-    return 'This action adds a new userDiary';
+    try {
+      const createdUserDiary = new this.userDiaryModel(createUserDiaryDto);
+      return createdUserDiary.save();
+    } catch (error) {
+      return { error: error.message };
+    }
+
   }
 
   findAll() {
