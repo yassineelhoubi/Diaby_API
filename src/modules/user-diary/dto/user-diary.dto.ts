@@ -1,4 +1,4 @@
-import { IsString, IsInt, IsEmail, Length } from 'class-validator'
+import { IsString, IsInt, IsEmail, Length, maxLength } from 'class-validator'
 
 export class UserDiaryDto {
     @IsString()
@@ -6,13 +6,11 @@ export class UserDiaryDto {
     userId: string;
 
     @IsString()
-    @Length(1, 255)
     type: "insulin" | "pill" | "sugarLevel";
 
     @IsInt()
     value: number;
 
     @IsString()
-    @Length(1, 255)
     notes: string;
 }
