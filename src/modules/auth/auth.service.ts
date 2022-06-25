@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '../config/config.service';
-import { jwtPayload } from './types';
+// import { ConfigService } from '../../config/config.service';
+import { JwtPayload } from './types';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +23,7 @@ export class AuthService {
         if(!role) throw new Error('No role provided');
 
 
-        const jwtPayload: jwtPayload = {
+        const jwtPayload: JwtPayload = {
             payload,
             role,
         };
