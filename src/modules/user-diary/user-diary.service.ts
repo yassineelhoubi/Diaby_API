@@ -12,9 +12,10 @@ export class UserDiaryService {
     @InjectModel(UserDiary.name) private readonly userDiaryModel: Model<UserDiary>
   ) { }
 
-  create(createUserDiaryDto: CreateUserDiaryDto) {
+  create(createUserDiaryDto: CreateUserDiaryDto, user: any) {
+
     try {
-      const createdUserDiary = new this.userDiaryModel(createUserDiaryDto);
+      const createdUserDiary = new this.userDiaryModel({...createUserDiaryDto, userId: user._id});
       return createdUserDiary.save();
     } catch (error) {
       return { error: error.message };
