@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Request } from '@nestjs/common';
 import { UserDiaryService } from './user-diary.service';
 import { CreateUserDiaryDto } from './dto/create-user-diary.dto';
 import { UpdateUserDiaryDto } from './dto/update-user-diary.dto';
@@ -8,11 +8,13 @@ import { UseGuards } from '@nestjs/common';
 
 @Controller('user-diary')
 export class UserDiaryController {
-  constructor(private readonly userDiaryService: UserDiaryService) {}
+  constructor(private readonly userDiaryService: UserDiaryService) { }
 
+  @Role("USER")
+  @UseGuards(JwtGuard)
   @Post()
-  create(@Body() createUserDiaryDto: CreateUserDiaryDto) {
-    return this.userDiaryService.create(createUserDiaryDto);
+  create(@Body() createUserDiaryDto: CreateUserDiaryDto, @Request() req: any) {
+    return this.userDiaryService.create(createUserDiaryDto, req.user);
   }
 
   @Get()
