@@ -22,6 +22,14 @@ export class UserDiaryService {
 
   }
 
+  getAllByQueryString(query: any) {
+    try {
+      return this.userDiaryModel.find(query);
+    }catch(error){
+      return { error: error.message };
+    }
+  }
+
   findAll() {
     return `This action returns all userDiary`;
   }

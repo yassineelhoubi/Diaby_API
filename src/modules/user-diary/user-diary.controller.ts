@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { UserDiaryService } from './user-diary.service';
 import { CreateUserDiaryDto } from './dto/create-user-diary.dto';
 import { UpdateUserDiaryDto } from './dto/update-user-diary.dto';
@@ -20,6 +20,11 @@ export class UserDiaryController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userDiaryService.findOne(+id);
+  }
+
+  @Get('getAllByType/query')
+  getAllByQueryString(@Query() query: any) {
+    return this.userDiaryService.getAllByQueryString(query);
   }
 
   @Patch(':id')
