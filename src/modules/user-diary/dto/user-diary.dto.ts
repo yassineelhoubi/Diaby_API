@@ -11,6 +11,6 @@ export class UserDiaryDto {
     @IsInt()
     value: number;
 
-    @IsString()
+    // @IsString()
     notes: string;
 }
