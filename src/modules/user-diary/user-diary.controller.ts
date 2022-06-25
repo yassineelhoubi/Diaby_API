@@ -2,6 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { UserDiaryService } from './user-diary.service';
 import { CreateUserDiaryDto } from './dto/create-user-diary.dto';
 import { UpdateUserDiaryDto } from './dto/update-user-diary.dto';
+import { Role } from 'src/helpers/decorators/role.decorator';
+import { JwtGuard } from '../auth/guards/jwt.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Controller('user-diary')
 export class UserDiaryController {
@@ -22,6 +25,8 @@ export class UserDiaryController {
     return this.userDiaryService.findOne(+id);
   }
 
+  @Role("USER")
+  @UseGuards(JwtGuard)
   @Get('getAllByType/query')
   getAllByQueryString(@Query() query: any) {
     return this.userDiaryService.getAllByQueryString(query);
