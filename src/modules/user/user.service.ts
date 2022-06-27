@@ -42,7 +42,7 @@ export class UserService {
       // create the token
       const token = await this.authService.createToken(createdUser, 'USER');
 
-      return { token, user };
+      return { token, user: createdUser };
 
     }
     catch (error) {
